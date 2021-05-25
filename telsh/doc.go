@@ -13,8 +13,8 @@ Here is an example usage:
 	
 	import (
 		"github.com/reiver/go-oi"
-		"github.com/reiver/go-telnet"
-		"github.com/reiver/go-telnet/telsh"
+		"github.com/talkincode/go-telnet"
+		"github.com/talkincode/go-telnet/telsh"
 
 		"io"
 	)
@@ -69,8 +69,8 @@ Here is a more "unpacked" example:
 	
 	import (
 		"github.com/reiver/go-oi"
-		"github.com/reiver/go-telnet"
-		"github.com/reiver/go-telnet/telsh"
+		"github.com/talkincode/go-telnet"
+		"github.com/talkincode/go-telnet/telsh"
 		
 		"io"
 		"time"

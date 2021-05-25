@@ -1,8 +1,8 @@
 package telnet
 
-
 import (
 	"crypto/tls"
+	"github.com/gamexg/proxyclient"
 	"net"
 )
 
@@ -43,6 +43,44 @@ func DialTo(addr string) (*Conn, error) {
 	conn, err := net.Dial(network, addr)
 	if nil != err {
 		return nil, err
+	}
+
+	dataReader := newDataReader(conn)
+	dataWriter := newDataWriter(conn)
+
+	clientConn := Conn{
+		conn:conn,
+		dataReader:dataReader,
+		dataWriter:dataWriter,
+	}
+
+	return &clientConn, nil
+}
+
+func DialToBySocks(addr string, socks string) (*Conn, error) {
+
+	const network = "tcp"
+
+	if "" == addr {
+		addr = "127.0.0.1:telnet"
+	}
+
+	var conn net.Conn
+	var err error
+	if socks == "" {
+		conn, err = net.Dial(network, addr)
+		if nil != err {
+			return nil, err
+		}
+	} else {
+		dialer, err :=  proxyclient.NewProxyClient(socks)
+		if err != nil {
+			return nil, err
+		}
+		conn, err = dialer.Dial(network, addr)
+		if nil != err {
+			return nil, err
+		}
 	}
 
 	dataReader := newDataReader(conn)
